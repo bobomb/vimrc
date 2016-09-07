@@ -1,0 +1,251 @@
+set nocompatible
+source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/mswin.vim
+behave mswin
+
+set diffexpr=MyDiff()
+ function MyDiff()
+   let opt = '-a --binary '
+   if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+   if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+   let arg1 = v:fname_in
+   if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+   let arg2 = v:fname_new
+   if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+   let arg3 = v:fname_out
+   if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+   if $VIMRUNTIME =~ ' '
+     if &sh =~ '\<cmd'
+       if empty(&shellxquote)
+         let l:shxq_sav = ''
+         set shellxquote&
+       endif
+       let cmd = '"' . $VIMRUNTIME . '\diff"'
+     else
+       let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+     endif
+   else
+     let cmd = $VIMRUNTIME . '\diff'
+   endif
+   silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
+   if exists('l:shxq_sav')
+     let &shellxquote=l:shxq_sav
+   endif
+ endfunction
+function! HasPaste()
+    if &paste
+        return 'PASTE MODE  '
+    en
+    return ''
+endfunction
+
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set number
+    set norelativenumber
+  else
+    set relativenumber
+    set number
+  endif
+endfunc
+
+
+if has("gui_running")
+  " Set a nicer font.
+  set guifont=Consolas:h10
+ " set guifont=Consolas:h10:cANSI
+   " Hide the toolbar.
+  set guioptions-=T
+  " Hide file menu
+  set guioptions-=M
+  set guioptions-=m
+  " use vim tabbar
+  set guioptions-=e
+  " Hide scrollbars
+  set guioptions-=r
+  set guioptions-=l
+  set guioptions-=L
+  set guioptions+=c
+endif
+
+"===============================================================================
+"VIM PLUG OPTIONS
+"===============================================================================
+call plug#begin('$VIMRUNTIME/plugged')
+Plug 'vim-airline/vim-airline'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'Valloric/YouCompleteMe'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-vinegar'
+Plug 'mhinz/vim-startify'
+Plug 'tpope/vim-surround'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'majutsushi/tagbar'
+Plug 'w0ng/vim-hybrid'
+Plug 'haya14busa/incsearch.vim'
+call plug#end()
+"===============================================================================
+"YOUCOMPLETEME OPTIONS
+"===============================================================================
+let g:ycm_path_to_python_interpreter="C:/python27/python.exe"
+let g:ycm_global_ycm_extra_conf = "$VIMRUNTIME/.ycm_extra_conf.py"
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_complete_in_comments = 1
+let g:ycm_key_invoke_completion = '<C-Space>'
+set background=dark
+let g:hybrid_reduced_contrast = 1
+"===============================================================================
+"TAGBAR OPTIONS
+"===============================================================================
+"disable tagbar sorting
+let g:tagbar_sort = 0
+" Tell tagbar to keep focus after opening it
+let g:tagbar_autofocus = 1
+"===============================================================================
+"COLORS/STYLES/THEMES OPTIONS
+"===============================================================================
+" colorscheme codeschool
+colorscheme hybrid
+"highlight Search guifg=#000000 guibg=#ff6666 
+highlight Cursor guifg=black guibg=white gui=underline
+"highlight Search cterm=NONE guifg=#182227 guibg=#8bb66
+"change color of line number
+highlight LineNr guifg=#7a848a
+"add full pat to vim airline
+set encoding=utf-8
+"AIRLINE SETTINGS
+let g:airline_section_c = airline#section#create(['%F'])
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='hybrid'
+let g:airline#extensions#tabline#tab_nr_type = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+" VIM specific options
+"disable swapfile
+set noswapfile
+"put temp files in tmp folder
+set backupdir-=.
+set backupdir^=$TEMP
+" line number in bottom ruler
+set ruler
+set number
+syntax enable
+"highlight line cursor is on
+set cursorline
+set incsearch   "find the next match as we type the search
+set hlsearch    "hilight searches by default
+" case insensitive searching unless you include an uppercase letter, in which case it becomes case sensitive
+set smartcase
+set ignorecase
+"default indent settings
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+" Use spaces instead of tabs
+set expandtab
+set autoindent
+set laststatus=2 " status bar always
+set backspace=indent,eol,start
+set smartindent
+" Show matching brackets when text indicator is over them
+set showmatch
+" How many tenths of a second to blink when matching brackets
+set mat=2
+" show tab bar always
+set showtabline=2
+" vim position and size
+set sessionoptions+=resize,winpos
+" disable auto comment leaders on newline and o
+set formatoptions-=c
+set formatoptions-=r
+set formatoptions-=o
+"enable folding on syntax
+set foldmethod=syntax
+"don't fold everything by default on load
+set nofoldenable
+" set autochdir
+" set vim hybrid number mode by enabling relative and absolute numbering modes
+set relativenumber
+set number
+" auto command to open quickfix window when using lvimgrep
+autocmd QuickFixCmdPost *lvimgrep* below lwindow
+" auto command to open quickfix window when using vimgrep
+autocmd QuickFixCmdPost vimgrep* below cwindow
+" make splits more natural by forcing new vsplits to open to the right, and
+let NERDTreeShowLineNumbers=1
+" make sure relative line numbers are used for nerdtree
+autocmd FileType nerdtree setlocal relativenumber
+" hsplits to the bottom
+set splitbelow
+set splitright
+"maximize window on start Use ~x on an English Windows version or ~n for French.
+au GUIEnter * simalt ~x
+"change search highlight text to red
+highlight Search guifg=red 
+"don't grep this shit
+set wildignore+=*.obj,*.tmh,*.tmf,*.pdb*,*.map,*.dll,*.lib,*.exe
+let g:ycm_filetype_blacklist={'notes': 1, 'markdown': 1, 'unite': 1, 'tagbar': 1, 'pandoc': 1, 'qf': 1, 'vimwiki': 1, 'text': 1, 'infolog': 1, 'mail': 1, 'vim' : 1}
+" Map // in visual mode to search for visual term
+vnoremap // y/<C-R>"<CR>
+" disable whitespace checking 
+autocmd VimEnter * AirlineToggleWhitespace
+" set map leader to ,
+let mapleader="," 
+" incsearch.vim
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+set viminfo+=nc:\\users\\mofidulj\\_viminfo
+set undodir=$VIMRUNTIME\\_undo
+"enable cursor column (shows highlights the column the cursor is currently
+set cursorcolumn
+" Disable Arrow keys in Escape mode
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+"map ctrl hjkl to arrow keys in insert mode
+imap <C-l> <right>
+imap <C-h> <left>
+imap <C-k> <up>
+imap <C-j> <down>
+"map shift-space to esc
+map! <S-space> <esc>
+vmap <S-space> <esc>
+"===============================================================================
+"LEADER MAPPINGS
+"===============================================================================
+"map <leader>cdc (currently ,cdc) to change directory to current file and
+"print result
+nnoremap <leader>cdc :cd %:p:h<CR>:pwd<CR>
+"full screen 
+nnoremap <leader>fs :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
+"ctrpl-buffer search
+nnoremap <leader>cb :CtrlPBuffer <CR>
+nnoremap <leader>cf :CtrlP<CR>
+nnoremap <leader>cm :CtrlPMRU<CR>
+"map ,w to ctrl-w for windows commands
+nmap <leader>w <C-W>
+"map ,r to toggle relative numbers
+nmap <leader>r :call NumberToggle()<CR>
+"map + and - to increment/decrement number
+"nnoremap <kPlus> <C-a>
+"nnoremap <kMinus> <C-x>
+"map ,s to :w, ,as to :wall (save/save all)
+nnoremap <leader>s :w<CR>
+nnoremap <leader>as :wall<CR>
+"map ,to to tab open
+noremap <leader>to :tabnew
+nnoremap <leader>tc :tabclose<CR>
+" Map tagbar to ,d
+nmap <leader>d :Tagbar<CR>
+" Map nerdtree to ctrl-n
+nmap <leader>n :NERDTreeToggle<CR>
+" Map ,tn and ,tp to next tag/prev tag in tagbar (kind of hacky)
+nmap <leader>tp :TagbarOpenAutoClose<CR>k<CR>
+nmap <leader>tn :TagbarOpenAutoClose<CR>j<CR>
