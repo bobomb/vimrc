@@ -215,8 +215,9 @@ imap <C-h> <left>
 imap <C-k> <up>
 imap <C-j> <down>
 "map shift-space to esc
-map! <S-space> <esc>
+nmap <S-space> <esc>
 vmap <S-space> <esc>
+imap <S-space> <esc>
 "===============================================================================
 "LEADER MAPPINGS
 "===============================================================================
@@ -231,6 +232,11 @@ nnoremap <leader>cf :CtrlP<CR>
 nnoremap <leader>cm :CtrlPMRU<CR>
 "map ,w to ctrl-w for windows commands
 nmap <leader>w <C-W>
+"map ,j ,k ,h ,l to window movement keys
+nmap <leader>j <C-W>j
+nmap <leader>k <C-W>k
+nmap <leader>h <C-W>h
+nmap <leader>l <C-W>l
 "map ,r to toggle relative numbers
 nmap <leader>r :call NumberToggle()<CR>
 "map + and - to increment/decrement number
@@ -240,7 +246,7 @@ nmap <leader>r :call NumberToggle()<CR>
 nnoremap <leader>s :w<CR>
 nnoremap <leader>as :wall<CR>
 "map ,to to tab open
-noremap <leader>to :tabnew
+noremap <leader>to :tabnew 
 nnoremap <leader>tc :tabclose<CR>
 " Map tagbar to ,d
 nmap <leader>d :Tagbar<CR>
