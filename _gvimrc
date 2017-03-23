@@ -84,14 +84,24 @@ Plug 'tpope/vim-surround'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'majutsushi/tagbar'
 Plug 'w0ng/vim-hybrid'
-Plug 'haya14busa/incsearch.vim'
+Plug 'tpope/vim-commentary'
+Plug 'mileszs/ack.vim'
+Plug 'kshenoy/vim-signature'
+Plug 'moll/vim-bbye'
+"Plug 'haya14busa/incsearch.vim'
+"Plug 'machakann/vim-highlightedyank'
+"Plug 'colepeters/spacemacs-theme.vim'
 call plug#end()
+"Map y to use highlighted yank instead
+"map y <Plug>(highlightedyank)
+let c_no_curly_error=1
 "===============================================================================
 "YOUCOMPLETEME OPTIONS
 "===============================================================================
 let g:ycm_path_to_python_interpreter="C:/python27/python.exe"
-let g:ycm_global_ycm_extra_conf = "$VIMRUNTIME/.ycm_extra_conf.py"
+"let g:ycm_global_ycm_extra_conf = "$VIMRUNTIME/.ycm_extra_conf.py"
 let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_complete_in_comments = 1
 let g:ycm_key_invoke_completion = '<C-Space>'
 set background=dark
@@ -103,16 +113,22 @@ let g:hybrid_reduced_contrast = 1
 let g:tagbar_sort = 0
 " Tell tagbar to keep focus after opening it
 let g:tagbar_autofocus = 1
+set tags=./tags;
 "===============================================================================
 "COLORS/STYLES/THEMES OPTIONS
 "===============================================================================
 " colorscheme codeschool
+if (has("termguicolors"))
+  set termguicolors
+endif
 colorscheme hybrid
-"highlight Search guifg=#000000 guibg=#ff6666 
-highlight Cursor guifg=black guibg=white gui=underline
-"highlight Search cterm=NONE guifg=#182227 guibg=#8bb66
+"highlight line cursor is on
+set cursorline
+"highlight Cursor guifg=black guibg=white gui=underline
+"highlight Search cterm=NONE guifg=#182227 guibg=#8bb660
 "change color of line number
-highlight LineNr guifg=#7a848a
+"highlight cursorcolumn guibg=#373c44
+highlight cursorline guibg=#34374f
 "add full pat to vim airline
 set encoding=utf-8
 "AIRLINE SETTINGS
@@ -135,10 +151,10 @@ set backupdir^=$TEMP
 set ruler
 set number
 syntax enable
-"highlight line cursor is on
-set cursorline
 set incsearch   "find the next match as we type the search
 set hlsearch    "hilight searches by default
+"highlight Search cterm=NONE guifg=#182227 guibg=#8bb660
+"highlight Search guifg=#000000 guibg=#ff6666 
 " case insensitive searching unless you include an uppercase letter, in which case it becomes case sensitive
 set smartcase
 set ignorecase
@@ -176,10 +192,10 @@ set number
 autocmd QuickFixCmdPost *lvimgrep* below lwindow
 " auto command to open quickfix window when using vimgrep
 autocmd QuickFixCmdPost vimgrep* below cwindow
-" make splits more natural by forcing new vsplits to open to the right, and
 let NERDTreeShowLineNumbers=1
 " make sure relative line numbers are used for nerdtree
 autocmd FileType nerdtree setlocal relativenumber
+" make splits more natural by forcing new vsplits to open to the right, and
 " hsplits to the bottom
 set splitbelow
 set splitright
@@ -197,9 +213,9 @@ autocmd VimEnter * AirlineToggleWhitespace
 " set map leader to ,
 let mapleader="," 
 " incsearch.vim
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
+"map /  <Plug>(incsearch-forward)
+"map ?  <Plug>(incsearch-backward)
+"map g/ <Plug>(incsearch-stay)
 set viminfo+=nc:\\users\\mofidulj\\_viminfo
 set undodir=$VIMRUNTIME\\_undo
 "enable cursor column (shows highlights the column the cursor is currently
@@ -221,15 +237,21 @@ imap <S-space> <esc>
 "===============================================================================
 "LEADER MAPPINGS
 "===============================================================================
+"map <leader>q to Bdelete (plugin)
+:nnoremap <leader>q :Bdelete<CR>
 "map <leader>cdc (currently ,cdc) to change directory to current file and
 "print result
 nnoremap <leader>cdc :cd %:p:h<CR>:pwd<CR>
+"map <leader>ldc (currently ,ldc) to change directory to current file and
+"print result
+nnoremap <leader>ldc :lcd %:p:h<CR>:pwd<CR>
 "full screen 
 nnoremap <leader>fs :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
 "ctrpl-buffer search
 nnoremap <leader>cb :CtrlPBuffer <CR>
 nnoremap <leader>cf :CtrlP<CR>
 nnoremap <leader>cm :CtrlPMRU<CR>
+nnoremap <leader>ct :CtrlPTag<CR>
 "map ,w to ctrl-w for windows commands
 nmap <leader>w <C-W>
 "map ,j ,k ,h ,l to window movement keys
@@ -250,8 +272,12 @@ noremap <leader>to :tabnew
 nnoremap <leader>tc :tabclose<CR>
 " Map tagbar to ,d
 nmap <leader>d :Tagbar<CR>
-" Map nerdtree to ctrl-n
+" Map nerdtree to ,n
 nmap <leader>n :NERDTreeToggle<CR>
 " Map ,tn and ,tp to next tag/prev tag in tagbar (kind of hacky)
 nmap <leader>tp :TagbarOpenAutoClose<CR>k<CR>
 nmap <leader>tn :TagbarOpenAutoClose<CR>j<CR>
+nmap <leader>b :b#<cr>
+highlight LineNr guifg=#7a848a
+highlight signcolumn none
+highlight signcolumn ctermfg=237 guifg=#425059
