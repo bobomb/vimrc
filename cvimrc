@@ -2,14 +2,15 @@ unmap d u
 map d scrollPageDown
 map u scrollPageUp
 set smoothscroll
-let barposition = "bottom"
+let barposition = "top"
 let hintcharacters = "sadfjklewcmpgh"
 let searchengine onebug = "http://onebug.citrite.net/tmtrack/tmtrack.dll?IssuePage&RecordId=%s[3]&Template=viewwrapper&TableId=1000"
 let searchengine wwcode_icahostmain = "http://wwwcode.eng.citrite.net/source/search?q=%s&defs=&refs=&path=&hist=&project=%2FICAHost-Main"
 let searchengine wwcode_clientcore = "http://wwwcode.eng.citrite.net/source/search?q=%s&defs=&refs=&path=&hist=&project=%2FICAClientCore-main"
 let searchengine mindtouch = "https://mindtouch.eng.citrite.net/Special:Search?search=%s"
 let searchengine jira = "https://issues.citrite.net/browse/%s"
-let completionengines = ['jira', 'mindtouch', 'wwcode_icape', 'wwcode_clientcore', 'onebug', 'google', 'google-image', 'youtube', 'wikipedia', 'amazon', 'google-maps', 'duckduckgo', 'webster'] " Show only these engines in the command bar
+let searchengine onefix = "http://onefix.eng.citrite.net/Fix/%s"
+let completionengines = ['onefix', 'jira', 'mindtouch', 'wwcode_icape', 'wwcode_clientcore', 'onebug', 'google', 'google-image', 'youtube', 'wikipedia', 'amazon', 'google-maps', 'duckduckgo', 'webster'] " Show only these engines in the command bar
 unmap <C-j>
 unmap <C-k>
 map <C-j> nextCompletionResult
