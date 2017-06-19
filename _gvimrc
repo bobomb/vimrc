@@ -52,8 +52,8 @@ endfunc
 
 if has("gui_running")
   " Set a nicer font.
-  set guifont=Consolas:h10
- " set guifont=Consolas:h10:cANSI
+ " set guifont=Consolas:h10
+  set guifont=Hack:h12:cANSI:qCLEARTYPE
    " Hide the toolbar.
   set guioptions-=T
   " Hide file menu
@@ -68,26 +68,30 @@ if has("gui_running")
   set guioptions+=c
 endif
 
+let g:airline#extensions#tagbar#flags = 'f'
 "===============================================================================
 "VIM PLUG OPTIONS
 "===============================================================================
 call plug#begin('$VIMRUNTIME/plugged')
-Plug 'vim-airline/vim-airline'
+Plug 'majutsushi/tagbar'
+let g:tagbar_ctags_bin = 'C:\utils\ctags.exe'
 Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'Valloric/YouCompleteMe'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-unimpaired'
+"Plug 'dhruvasagar/vim-vinegar'
 Plug 'tpope/vim-vinegar'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-surround'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'majutsushi/tagbar'
 Plug 'w0ng/vim-hybrid'
 Plug 'tpope/vim-commentary'
 Plug 'mileszs/ack.vim'
 Plug 'kshenoy/vim-signature'
 Plug 'moll/vim-bbye'
+Plug 'pjkack/vim-ctrlp-tjump'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 "Plug 'haya14busa/incsearch.vim'
 "Plug 'machakann/vim-highlightedyank'
 "Plug 'colepeters/spacemacs-theme.vim'
@@ -95,6 +99,10 @@ call plug#end()
 "Map y to use highlighted yank instead
 "map y <Plug>(highlightedyank)
 let c_no_curly_error=1
+"===============================================================================
+"CTRLP OPTIONS
+"===============================================================================
+let g:ctrlp_extensions = ['tag']
 "===============================================================================
 "YOUCOMPLETEME OPTIONS
 "===============================================================================
@@ -132,9 +140,10 @@ highlight cursorline guibg=#34374f
 "add full pat to vim airline
 set encoding=utf-8
 "AIRLINE SETTINGS
+let g:airline#extensions#tagbar#flags = 'f'
 let g:airline_section_c = airline#section#create(['%F'])
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='hybrid'
+let g:airline_theme='dark'
 let g:airline#extensions#tabline#tab_nr_type = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_left_sep = ''
@@ -180,8 +189,10 @@ set sessionoptions+=resize,winpos
 set formatoptions-=c
 set formatoptions-=r
 set formatoptions-=o
+"show tags
+"set showfulltag
 "enable folding on syntax
-set foldmethod=syntax
+"set foldmethod=syntax
 "don't fold everything by default on load
 set nofoldenable
 " set autochdir
@@ -236,6 +247,8 @@ vmap <S-space> <esc>
 imap <S-space> <esc>
 "===============================================================================
 "LEADER MAPPINGS
+"DONT MAP KEYS TO START WITH h,j,k,l since i reserve those for split
+"navication and i don't want the input delay
 "===============================================================================
 "map <leader>q to Bdelete (plugin)
 :nnoremap <leader>q :Bdelete<CR>
@@ -244,14 +257,14 @@ imap <S-space> <esc>
 nnoremap <leader>cdc :cd %:p:h<CR>:pwd<CR>
 "map <leader>ldc (currently ,ldc) to change directory to current file and
 "print result
-nnoremap <leader>ldc :lcd %:p:h<CR>:pwd<CR>
+nnoremap <leader>cdl :lcd %:p:h<CR>:pwd<CR>
 "full screen 
 nnoremap <leader>fs :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
 "ctrpl-buffer search
 nnoremap <leader>cb :CtrlPBuffer <CR>
 nnoremap <leader>cf :CtrlP<CR>
 nnoremap <leader>cm :CtrlPMRU<CR>
-nnoremap <leader>ct :CtrlPTag<CR>
+nnoremap <leader>ct :CtrlPtjump<CR>
 "map ,w to ctrl-w for windows commands
 nmap <leader>w <C-W>
 "map ,j ,k ,h ,l to window movement keys
@@ -277,6 +290,7 @@ nmap <leader>n :NERDTreeToggle<CR>
 " Map ,tn and ,tp to next tag/prev tag in tagbar (kind of hacky)
 nmap <leader>tp :TagbarOpenAutoClose<CR>k<CR>
 nmap <leader>tn :TagbarOpenAutoClose<CR>j<CR>
+"Map ,b to switch to previous buffer
 nmap <leader>b :b#<cr>
 highlight LineNr guifg=#7a848a
 highlight signcolumn none
