@@ -77,10 +77,10 @@ Plug 'majutsushi/tagbar'
 let g:tagbar_ctags_bin = 'C:\utils\ctags.exe'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'Valloric/YouCompleteMe'
-Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-unimpaired'
-"Plug 'dhruvasagar/vim-vinegar'
 Plug 'tpope/vim-vinegar'
+Plug 'simnalamburt/vim-mundo'
+Plug 'justinmk/vim-dirvish'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-surround'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -92,12 +92,8 @@ Plug 'moll/vim-bbye'
 Plug 'pjkack/vim-ctrlp-tjump'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"Plug 'haya14busa/incsearch.vim'
-"Plug 'machakann/vim-highlightedyank'
 "Plug 'colepeters/spacemacs-theme.vim'
 call plug#end()
-"Map y to use highlighted yank instead
-"map y <Plug>(highlightedyank)
 let c_no_curly_error=1
 "===============================================================================
 "CTRLP OPTIONS
@@ -132,10 +128,7 @@ endif
 colorscheme hybrid
 "highlight line cursor is on
 set cursorline
-"highlight Cursor guifg=black guibg=white gui=underline
-"highlight Search cterm=NONE guifg=#182227 guibg=#8bb660
 "change color of line number
-"highlight cursorcolumn guibg=#373c44
 highlight cursorline guibg=#34374f
 "add full pat to vim airline
 set encoding=utf-8
@@ -162,8 +155,6 @@ set number
 syntax enable
 set incsearch   "find the next match as we type the search
 set hlsearch    "hilight searches by default
-"highlight Search cterm=NONE guifg=#182227 guibg=#8bb660
-"highlight Search guifg=#000000 guibg=#ff6666 
 " case insensitive searching unless you include an uppercase letter, in which case it becomes case sensitive
 set smartcase
 set ignorecase
@@ -203,9 +194,6 @@ set number
 autocmd QuickFixCmdPost *lvimgrep* below lwindow
 " auto command to open quickfix window when using vimgrep
 autocmd QuickFixCmdPost vimgrep* below cwindow
-let NERDTreeShowLineNumbers=1
-" make sure relative line numbers are used for nerdtree
-autocmd FileType nerdtree setlocal relativenumber
 " make splits more natural by forcing new vsplits to open to the right, and
 " hsplits to the bottom
 set splitbelow
@@ -223,12 +211,9 @@ vnoremap // y/<C-R>"<CR>
 autocmd VimEnter * AirlineToggleWhitespace
 " set map leader to ,
 let mapleader="," 
-" incsearch.vim
-"map /  <Plug>(incsearch-forward)
-"map ?  <Plug>(incsearch-backward)
-"map g/ <Plug>(incsearch-stay)
 set viminfo+=nc:\\users\\mofidulj\\_viminfo
-set undodir=$VIMRUNTIME\\_undo
+set undofile
+set undodir=c:\\users\\mofidulj\\vimundo
 "enable cursor column (shows highlights the column the cursor is currently
 set cursorcolumn
 " Disable Arrow keys in Escape mode
@@ -255,7 +240,7 @@ imap <S-space> <esc>
 "map <leader>cdc (currently ,cdc) to change directory to current file and
 "print result
 nnoremap <leader>cdc :cd %:p:h<CR>:pwd<CR>
-"map <leader>ldc (currently ,ldc) to change directory to current file and
+"map <leader>ldc (currently ,ldc) to change local directory to current file and
 "print result
 nnoremap <leader>cdl :lcd %:p:h<CR>:pwd<CR>
 "full screen 
@@ -285,13 +270,13 @@ noremap <leader>to :tabnew
 nnoremap <leader>tc :tabclose<CR>
 " Map tagbar to ,d
 nmap <leader>d :Tagbar<CR>
-" Map nerdtree to ,n
-nmap <leader>n :NERDTreeToggle<CR>
 " Map ,tn and ,tp to next tag/prev tag in tagbar (kind of hacky)
 nmap <leader>tp :TagbarOpenAutoClose<CR>k<CR>
 nmap <leader>tn :TagbarOpenAutoClose<CR>j<CR>
 "Map ,b to switch to previous buffer
 nmap <leader>b :b#<cr>
+"map ,p to switch to previous window/split
+nmap <leader>p <C-W>p
 highlight LineNr guifg=#7a848a
 highlight signcolumn none
 highlight signcolumn ctermfg=237 guifg=#425059
