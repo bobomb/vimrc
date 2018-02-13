@@ -78,7 +78,7 @@ let g:tagbar_ctags_bin = 'C:\utils\ctags.exe'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'Valloric/YouCompleteMe'
 Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-vinegar'
+" Plug 'tpope/vim-vinegar'
 Plug 'simnalamburt/vim-mundo'
 Plug 'justinmk/vim-dirvish'
 Plug 'mhinz/vim-startify'
@@ -87,16 +87,23 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'w0ng/vim-hybrid'
 Plug 'tpope/vim-commentary'
 Plug 'mileszs/ack.vim'
-Plug 'kshenoy/vim-signature'
-Plug 'moll/vim-bbye'
+Plug 'kshenoy/vim-signature' "For marks
+Plug 'moll/vim-bbye' "For deleting buffers without closing splits
 Plug 'pjkack/vim-ctrlp-tjump'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'unblevable/quick-scope'
 "Plug 'colepeters/spacemacs-theme.vim'
 call plug#end()
 let c_no_curly_error=1
+"quick-scope options"
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 "===============================================================================
-"CTRLP OPTIONS
+"vim-dirvish OPTIONS
+"===============================================================================
+let g:dirvish_mode = ':sort ,^.*[\/],'
+"===============================================================================
+"ctrlpvim OPTIONS
 "===============================================================================
 let g:ctrlp_extensions = ['tag']
 "===============================================================================
@@ -118,6 +125,8 @@ let g:tagbar_sort = 0
 " Tell tagbar to keep focus after opening it
 let g:tagbar_autofocus = 1
 set tags=./tags;
+"show line numbers based on global line numbers style
+let g:tagbar_show_linenumbers = -1
 "===============================================================================
 "COLORS/STYLES/THEMES OPTIONS
 "===============================================================================
@@ -277,6 +286,10 @@ nmap <leader>tn :TagbarOpenAutoClose<CR>j<CR>
 nmap <leader>b :b#<cr>
 "map ,p to switch to previous window/split
 nmap <leader>p <C-W>p
+"map ,e to open explorer window at current file directory
+nmap <leader>e :!start explorer /select,%:p<CR>
+"map ,pe to p4 edit current file
+nmap <leader>pe :!p4 edit %<CR>
 highlight LineNr guifg=#7a848a
 highlight signcolumn none
 highlight signcolumn ctermfg=237 guifg=#425059
