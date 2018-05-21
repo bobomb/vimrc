@@ -73,6 +73,8 @@ let g:airline#extensions#tagbar#flags = 'f'
 "VIM PLUG OPTIONS
 "===============================================================================
 call plug#begin('$VIMRUNTIME/plugged')
+Plug 'PProvost/vim-ps1'
+Plug 'yggdroot/indentline'
 Plug 'majutsushi/tagbar'
 let g:tagbar_ctags_bin = 'C:\utils\ctags.exe'
 Plug 'octol/vim-cpp-enhanced-highlight'
@@ -92,7 +94,8 @@ Plug 'moll/vim-bbye' "For deleting buffers without closing splits
 Plug 'pjkack/vim-ctrlp-tjump'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'unblevable/quick-scope'
+" Plug 'blueyed/vim-diminactive'
+" Plug 'unblevable/quick-scope'
 "Plug 'colepeters/spacemacs-theme.vim'
 call plug#end()
 let c_no_curly_error=1
@@ -102,6 +105,8 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 "vim-dirvish OPTIONS
 "===============================================================================
 let g:dirvish_mode = ':sort ,^.*[\/],'
+"change the dirvish suffix highlighting to Tag so it is more visible
+highlight! default link DirvishSuffix Tag
 "===============================================================================
 "ctrlpvim OPTIONS
 "===============================================================================
@@ -256,7 +261,8 @@ nnoremap <leader>cdl :lcd %:p:h<CR>:pwd<CR>
 nnoremap <leader>fs :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
 "ctrpl-buffer search
 nnoremap <leader>cb :CtrlPBuffer <CR>
-nnoremap <leader>cf :CtrlP<CR>
+nnoremap <leader>cf :CtrlPCurFile<CR>
+nnoremap <leader>cw :CtrlPCurWD<CR>
 nnoremap <leader>cm :CtrlPMRU<CR>
 nnoremap <leader>ct :CtrlPtjump<CR>
 "map ,w to ctrl-w for windows commands
